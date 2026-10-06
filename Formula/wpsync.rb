@@ -1,8 +1,8 @@
 class Wpsync < Formula
   desc "WordPress Live → Lokal: zieht Sites schonend in DDEV-Projekte"
   homepage "https://github.com/UserMind2018/wpsync"
-  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.1.8.tar.gz"
-  sha256 "7edb120ed25b92db1c170977e6ab64461adce19f3626b088e6c4a9181ca925e1"
+  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "cce98e4fc4182bcbdcce0c981e385e2dffca33d1370ae693f5b746e9ca62cae1"
   head "https://github.com/UserMind2018/wpsync.git", branch: "main"
 
   depends_on "go" => :build
@@ -17,8 +17,9 @@ class Wpsync < Formula
     # Agent-Plugin-ZIP wie agent/build.sh, ohne PHP-Lint (PHP ist keine Build-Abhängigkeit)
     cd "agent" do
       mkdir_p "pkg/wpsync-agent/src"
-      cp "wpsync-agent.php", "pkg/wpsync-agent/"
+      cp ["wpsync-agent.php", "rescue.php"], "pkg/wpsync-agent/"
       cp Dir["src/*.php"], "pkg/wpsync-agent/src/"
+      cp "../LICENSE", "pkg/wpsync-agent/LICENSE"
       cd "pkg" do
         system "zip", "-qr", "wpsync-agent.zip", "wpsync-agent"
         pkgshare.install "wpsync-agent.zip"
