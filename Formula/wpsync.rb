@@ -1,8 +1,8 @@
 class Wpsync < Formula
   desc "WordPress Live → Lokal: zieht Sites schonend in DDEV-Projekte"
   homepage "https://github.com/UserMind2018/wpsync"
-  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.3.1.tar.gz"
-  sha256 "a9dd77262f214e3668873a169fc7e72866bbc74beb770c62f2b1dda2d3376b31"
+  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.4.0.tar.gz"
+  sha256 "b79eb9fdb4f6aa7a50f7019aa31059ce6dd4e23c66d088c5b3334a5ca8efa3e8"
   head "https://github.com/UserMind2018/wpsync.git", branch: "main"
 
   depends_on "go" => :build
@@ -17,8 +17,10 @@ class Wpsync < Formula
     # Agent-Plugin-ZIP wie agent/build.sh, ohne PHP-Lint (PHP ist keine Build-Abhängigkeit)
     cd "agent" do
       mkdir_p "pkg/wpsync-agent/src"
+      mkdir_p "pkg/wpsync-agent/staging"
       cp ["wpsync-agent.php", "rescue.php"], "pkg/wpsync-agent/"
       cp Dir["src/*.php"], "pkg/wpsync-agent/src/"
+      cp Dir["staging/*.php"], "pkg/wpsync-agent/staging/" # Riegel der Staging-Kopie (seit 0.4.0)
       cp "../LICENSE", "pkg/wpsync-agent/LICENSE"
       cd "pkg" do
         system "zip", "-qr", "wpsync-agent.zip", "wpsync-agent"
@@ -41,5 +43,6 @@ class Wpsync < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/wpsync version")
     assert_path_exists pkgshare/"wpsync-agent.zip"
+    assert_match "wpsync-agent/staging/00-wpsync-staging.php", shell_output("unzip -l #{pkgshare}/wpsync-agent.zip")
   end
 end
