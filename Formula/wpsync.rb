@@ -1,8 +1,8 @@
 class Wpsync < Formula
   desc "WordPress Live → Lokal: zieht Sites schonend in DDEV-Projekte"
   homepage "https://github.com/UserMind2018/wpsync"
-  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.8.0.tar.gz"
-  sha256 "6f0161f21ae6adbfb0911213f518117a35ad43398e0825dc2e3efd051a0c2f5a"
+  url "https://github.com/UserMind2018/wpsync/archive/refs/tags/v0.9.1.tar.gz"
+  sha256 "c82204efc680a8897ef3422f206fa92f6b97eb8da6d5ceb2b8731dd0d1a1969c"
   head "https://github.com/UserMind2018/wpsync.git", branch: "main"
 
   depends_on "go" => :build
